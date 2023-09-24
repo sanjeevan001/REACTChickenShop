@@ -1,25 +1,71 @@
-import logo from './logo.svg';
-import './App.css';
+
+// import './App.css';
+// import ChickenShop from './ChickenShop';
+// import Movibooking from './Componment/Movibooking';
+// import Employesalary from './Employesalary';
+// import StudentMarks from './StudentMarks';
+
+
+// function App() {
+//   return (
+//     <div className="App">
+//       <h1>movie Bokking app</h1>
+//    <ChickenShop/>
+//    <Employesalary/>
+//    <StudentMarks/>
+//    <Movibooking/>
+    
+//     </div>
+//   );
+// }
+
+// export default App;
+
+
+
+
+import React, { useState } from "react";
+import ToDoItem from "./ToDoItem";
+import InputArea from "./InputArea";
 
 function App() {
+  const [items, setItems] = useState([]);
+
+  function addItem(inputText) {
+    setItems(prevItems => {
+      return [...prevItems, inputText];
+    });
+  }
+
+  function deleteItem(id) {
+    setItems(prevItems => {
+      return prevItems.filter((item, index) => {
+        return index !== id;
+      });
+    });
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <div className="heading">
+        <h1>To-Do List</h1>
+      </div>
+      <InputArea addItem={addItem} />
+      <div>
+        <ul>
+          {items.map((todoItem, index) => (
+            <ToDoItem
+              key={index}
+              id={index}
+              text={todoItem}
+              onChecked={deleteItem}
+            />
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
 
 export default App;
+
